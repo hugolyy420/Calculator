@@ -1,5 +1,10 @@
 const buttons = document.querySelectorAll('input[type=button]');
 const displaybox = document.getElementById('result');
+const cal = new Calculator;
+let firstNumber;
+let operator;
+let secondNumber;
+
 
 buttons.forEach(button => {
     button.addEventListener('click', display);
@@ -7,8 +12,7 @@ buttons.forEach(button => {
 
 function display(e) {
     let buttonclicked = e.target.value;
-  
-    displaybox.value = buttonclicked;
+    displaybox.value += buttonclicked;
   }
 
 function Calculator () {
