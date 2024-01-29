@@ -1,39 +1,119 @@
 const buttons = document.querySelectorAll('input[type=button]');
+const input = document.getElementById('result')
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
 const operatorValues = Array.from(operatorButtons, ({ value }) => value);
 const equalButton = document.getElementById('equal')
 const displaybox = document.getElementById('result');
+const processbox = document.getElementById('process');
 const clearButton = document.getElementById('clear');
 const decimalButton = document.getElementById('decimal');
 const deleteButton = document.getElementById('delete');
 const plusMinusButton = document.getElementById('plus-minus')
+const percentageButton = document.getElementById('percentage')
 const cal = new Calculator;
-displaybox.defaultValue = 0;
+displaybox.textContent = 0;
 let firstNumber = "0";
 let operator = "";
 let secondNumber = "";
 
+document.addEventListener("keydown", (event) => {
+    if (event.key >= "0" && event.key <= "9") {
+        let numberPressed = event.key
+        keyboardNumberDisplay(numberPressed);
+    } else if (event.key == "+" || event.key == "*" || event.key == "-" || event.key == "/") {
+        let operatorPressed = event.key
+        keyboardOperatorDisplay (operatorPressed)
+    } else if (event.key == "=" || event.key == "Enter") {
+        keyboardEqualDisplay();
+    } else if (event.key === "Escape") {
+        clear ();
+    } else if (event.key === "Backspace") {
+        deleteNumber ();
+    } else if (event.key === ".") {
+        let decimalPointPressed = event.key
+        keyboardDecimalPointDisplay(decimalPointPressed);
+    }
+
+})
+
+function keyboardNumberDisplay (str) {
+    if (displaybox.textContent.includes(".") && firstNumber && !operator) {
+        firstNumber += str;
+        displaybox.textContent = firstNumber;
+    } else if (firstNumber == 0 && !operator) {
+        firstNumber = str;
+        displaybox.textContent = firstNumber;
+    } 
+    else if (!operator) {
+        firstNumber += str;
+        displaybox.textContent = firstNumber;
+    } else if (firstNumber && operator) {
+        displaybox.textContent = "";
+        secondNumber += str;
+        displaybox.textContent = secondNumber;}
+    }
+
+function keyboardOperatorDisplay (str) {
+    if (firstNumber && !operator) {
+        operator = str;
+        processbox.textContent = firstNumber + " " + operator;
+        } 
+        else if (secondNumber) {
+            let resultmath = firstNumber + " " + operator + " " + secondNumber;
+            displaybox.textContent = Math.round(cal.operate(resultmath)*1000)/1000;
+            firstNumber = displaybox.textContent;
+            operator = str;
+            secondNumber = "";
+            processbox.textContent = firstNumber + " " + operator;
+        } else if (operator && firstNumber) {
+            operator = str;
+            processbox.textContent = firstNumber + " " + operator;
+        } 
+}
+
+function keyboardEqualDisplay () {
+    if (secondNumber) {
+        let resultmath = firstNumber + " " + operator + " " + secondNumber;
+        displaybox.textContent = Math.round(cal.operate(resultmath)*1000)/1000;
+        processbox.textContent = firstNumber + " " + operator + " " + secondNumber + " " + "=";
+        firstNumber = displaybox.textContent;
+        operator = "";
+        secondNumber = "";
+    }
+}
+
+function keyboardDecimalPointDisplay (str) {
+    if (firstNumber && !firstNumber.includes(".") && !operator){
+        decimalButton.disabled = false;
+        firstNumber += str;
+        displaybox.textContent = firstNumber;
+    } else if (secondNumber && !secondNumber.includes(".")) {
+        decimalButton.disabled = false;
+        secondNumber += str;
+        displaybox.textContent = secondNumber;
+    }
+}
 
 numberButtons.forEach(button => {
     button.addEventListener('click', display);
 })
 
 function display(e) {
-    if (displaybox.value.includes(".") && firstNumber && !operator) {
+    if (displaybox.textContent.includes(".") && firstNumber && !operator) {
         firstNumber += e.target.value;
-        displaybox.value = firstNumber;
+        displaybox.textContent = firstNumber;
     } else if (firstNumber == 0 && !operator) {
         firstNumber = e.target.value;
-        displaybox.value = firstNumber;
+        displaybox.textContent = firstNumber;
     } 
     else if (!operator) {
         firstNumber += e.target.value;
-        displaybox.value = firstNumber;
+        displaybox.textContent = firstNumber;
     } else if (firstNumber && operator) {
-        displaybox.value = "";
+        displaybox.textContent = "";
         secondNumber += e.target.value;
-        displaybox.value = secondNumber;}
+        displaybox.textContent = secondNumber;}
     }
 
 
@@ -44,15 +124,20 @@ operatorButtons.forEach(button => {
 function operate(e) {
     if (firstNumber && !operator) {
     operator = e.target.value;
-    displaybox.value = operator;
+    processbox.textContent = firstNumber + " " + operator;
+    displaybox.textContent = operator;
     } 
     else if (secondNumber) {
         let resultmath = firstNumber + " " + operator + " " + secondNumber;
-        displaybox.value = Math.round(cal.operate(resultmath)*1000)/1000;
-        firstNumber = displaybox.value;
+        displaybox.textContent = Math.round(cal.operate(resultmath)*1000)/1000;
+        firstNumber = displaybox.textContent;
         operator = e.target.value;
         secondNumber = "";
-    } 
+        processbox.textContent = firstNumber + " " + operator;
+    } if (operator && firstNumber) {
+        operator = e.target.value;
+        processbox.textContent = firstNumber + " " + operator;
+    }
     }
 
 equalButton.addEventListener('click',equal);
@@ -60,8 +145,9 @@ equalButton.addEventListener('click',equal);
 function equal(e) {
      if (secondNumber &&  e.target.value === "=") {
         let resultmath = firstNumber + " " + operator + " " + secondNumber;
-        displaybox.value = Math.round(cal.operate(resultmath)*1000)/1000;
-        firstNumber = displaybox.value;
+        displaybox.textContent = Math.round(cal.operate(resultmath)*1000)/1000;
+        processbox.textContent = firstNumber + " " + operator + " " + secondNumber + " " + "=";
+        firstNumber = displaybox.textContent;
         operator = "";
         secondNumber = "";
     }
@@ -70,36 +156,61 @@ function equal(e) {
 clearButton.addEventListener('click', clear);
 
 function clear() {
-    displaybox.value = 0;
+    displaybox.textContent = 0;
+    processbox.textContent = "";
     firstNumber = "0";
     operator = "";
     secondNumber = "";
 }
 
-decimalButton.addEventListener('click', (e) => {
+decimalButton.addEventListener('click', addDecimalPoint);
+
+function addDecimalPoint (e) {
     if (firstNumber && !firstNumber.includes(".") && !operator){
-        console.log("adding decimal point to firt number");
         decimalButton.disabled = false;
         firstNumber += e.target.value;
-        displaybox.value = firstNumber;
+        displaybox.textContent = firstNumber;
     } else if (secondNumber && !secondNumber.includes(".")) {
-        console.log("Adding decimal point to second number");
         decimalButton.disabled = false;
         secondNumber += e.target.value;
-        displaybox.value = secondNumber;
+        displaybox.textContent = secondNumber;
     }
-})
+}
 
 deleteButton.addEventListener('click', deleteNumber)
 
 function deleteNumber () {
     if (firstNumber && !operator) {
       firstNumber = firstNumber.slice(0,-1);
-      displaybox.value = firstNumber;
+      displaybox.textContent = firstNumber;
     } else if (secondNumber) {
         secondNumber = secondNumber.slice(0,-1);
-      displaybox.value = secondNumber;
+      displaybox.textContent = secondNumber;
     }
+}
+
+plusMinusButton.addEventListener('click', plusMinus)
+
+function plusMinus () {
+    if (firstNumber && !operator) {
+        firstNumber *= -1;
+        displaybox.textContent = firstNumber;
+      } else if (secondNumber) {
+          secondNumber *= -1;
+        displaybox.textContent = secondNumber;
+      }
+}
+
+percentageButton.addEventListener('click', percentage)
+
+function percentage () {
+    if (firstNumber && !operator) {
+        firstNumber *= 1/100;
+        displaybox.textContent = firstNumber;
+      } else if (secondNumber) {
+          secondNumber *= 1/100;
+        displaybox.textContent = secondNumber;
+      }
 }
 
 function Calculator () {
