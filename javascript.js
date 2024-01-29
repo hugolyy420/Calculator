@@ -6,9 +6,9 @@ const equalButton = document.getElementById('equal')
 const displaybox = document.getElementById('result');
 const cal = new Calculator;
 displaybox.defaultValue = 0;
-let firstNumber;
-let operator;
-let secondNumber;
+let firstNumber = "0";
+let operator = "";
+let secondNumber = "";
 
 
 numberButtons.forEach(button => {
@@ -16,36 +16,38 @@ numberButtons.forEach(button => {
 })
 
 function display(e) {
-    if (displaybox.value == 0) {
-        let buttonclicked = e.target.value;
-        displaybox.value = buttonclicked;
+    if (firstNumber == 0 && !operator) {
+        firstNumber = e.target.value;
+        displaybox.value = firstNumber;
     } else
-    if (operatorValues.indexOf(displaybox.value) == -1) {
-        let buttonclicked = e.target.value;
-        displaybox.value += buttonclicked;
-    } else {
-        let buttonclicked = e.target.value;
+    if (!operator) {
+        firstNumber += e.target.value;
+        displaybox.value = firstNumber;
+    } else if (firstNumber && operator) {
         displaybox.value = "";
-    displaybox.value += buttonclicked;}
+        secondNumber += e.target.value;
+        displaybox.value = secondNumber;}
     // if (e.target.value === "/" || e.target.value === "*" || e.target.value === "-" || e.target.value === "+") {
     //     firstNumber = displaybox.value;
     //     displaybox.value = e.target.value;
     }
+
 
 operatorButtons.forEach(button => {
     button.addEventListener('click', storeFirstNumberAndOperator);
 })
 
 function storeFirstNumberAndOperator(e) {
-    if (firstNumber === undefined){
-    firstNumber = displaybox.value;
+    if (firstNumber && !operator) {
     operator = e.target.value;
     displaybox.value = operator;
     }
-    else if (secondNumber === undefined) {
-        secondNumber = displaybox.value;
+    else if (secondNumber) {
         let resultmath = firstNumber + " " + operator + " " + secondNumber;
         displaybox.value = cal.operate(resultmath);
+        firstNumber = displaybox.value;
+        operator = e.target.value;
+        secondNumber = "";
     } 
     }
 
