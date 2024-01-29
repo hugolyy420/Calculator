@@ -7,6 +7,7 @@ const displaybox = document.getElementById('result');
 const clearButton = document.getElementById('clear');
 const decimalButton = document.getElementById('decimal');
 const deleteButton = document.getElementById('delete');
+const plusMinusButton = document.getElementById('plus-minus')
 const cal = new Calculator;
 displaybox.defaultValue = 0;
 let firstNumber = "0";
@@ -92,9 +93,12 @@ decimalButton.addEventListener('click', (e) => {
 deleteButton.addEventListener('click', deleteNumber)
 
 function deleteNumber () {
-    if (firstNumber) {
-      firstNumber.slice(0,-1);
+    if (firstNumber && !operator) {
+      firstNumber = firstNumber.slice(0,-1);
       displaybox.value = firstNumber;
+    } else if (secondNumber) {
+        secondNumber = secondNumber.slice(0,-1);
+      displaybox.value = secondNumber;
     }
 }
 
