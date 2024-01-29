@@ -27,21 +27,18 @@ function display(e) {
         displaybox.value = "";
         secondNumber += e.target.value;
         displaybox.value = secondNumber;}
-    // if (e.target.value === "/" || e.target.value === "*" || e.target.value === "-" || e.target.value === "+") {
-    //     firstNumber = displaybox.value;
-    //     displaybox.value = e.target.value;
     }
 
 
 operatorButtons.forEach(button => {
-    button.addEventListener('click', storeFirstNumberAndOperator);
+    button.addEventListener('click', operate);
 })
 
-function storeFirstNumberAndOperator(e) {
+function operate(e) {
     if (firstNumber && !operator) {
     operator = e.target.value;
     displaybox.value = operator;
-    }
+    } 
     else if (secondNumber) {
         let resultmath = firstNumber + " " + operator + " " + secondNumber;
         displaybox.value = cal.operate(resultmath);
@@ -51,6 +48,17 @@ function storeFirstNumberAndOperator(e) {
     } 
     }
 
+equalButton.addEventListener('click',equal);
+
+function equal(e) {
+     if (secondNumber &&  e.target.value === "=") {
+        let resultmath = firstNumber + " " + operator + " " + secondNumber;
+        displaybox.value = cal.operate(resultmath);
+        firstNumber = displaybox.value;
+        operator = "";
+        secondNumber = "";
+    }
+}
 function Calculator () {
 
     this.methods = {
