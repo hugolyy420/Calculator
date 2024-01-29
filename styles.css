@@ -16,11 +16,11 @@ header {
 
 body {
     font-family: "roboto", "Arial", sans-serif;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(235, 235, 235);
 }
 
 table { 
-    border: 3px solid black; 
+    border: 2px solid black; 
     padding: 5px;
     margin-left: auto; 
     margin-right: auto; 
@@ -28,16 +28,27 @@ table {
     background-color: white;
     margin-top: 20px;
 } 
-  
-input[type="button"] { 
+
+input[type="button"].operator, #equal {
     width: 100%; 
     padding: 20px 40px; 
-    background-color: rgb(85, 23, 243); 
+    background-color: rgb(185, 81, 36); 
     color: white; 
     font-size: 24px; 
     font-weight: bold; 
-    border: none; 
-    border-radius: 5px; 
+    border: 2px solid rgb(185, 81, 36); 
+    border-radius: 15px; 
+}
+
+input[type="button"] { 
+    width: 100%; 
+    padding: 20px 40px; 
+    background-color: rgb(255, 255, 255); 
+    color: rgb(185, 81, 36); 
+    font-size: 24px; 
+    font-weight: bold; 
+    border: 2px solid rgb(185, 81, 36); 
+    border-radius: 15px; 
 } 
   
 #big-display {
@@ -49,6 +60,7 @@ input[type="button"] {
     border-radius: 5px; 
     border: 2px solid black; 
     margin-bottom: 10px;
+    background-color: white;
 }
 
 #process {
@@ -74,7 +86,7 @@ footer {
     position:absolute;
     bottom: 0;
     margin: auto;
-    color: white;
+    color: black;
     padding-top: 15px;
-    background-color: rgb(85, 23, 243);
+    background-color: rgb(237, 237, 237);
 }
