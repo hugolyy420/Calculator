@@ -4,25 +4,35 @@
     box-sizing: border-box;
 }
 
+td {
+    padding: 5px
+}
+
 header {
     text-align: center;
-    padding: 50px;
+    height: 70px;
+    padding-top: 25px;
 }
 
 body {
     font-family: "roboto", "Arial", sans-serif;
+    background-color: rgb(255, 255, 255);
 }
 
 table { 
-    border: 1px solid black; 
+    border: 3px solid black; 
+    padding: 5px;
     margin-left: auto; 
     margin-right: auto; 
+    border-radius: 10px;
+    background-color: white;
+    margin-top: 20px;
 } 
   
 input[type="button"] { 
     width: 100%; 
     padding: 20px 40px; 
-    background-color: green; 
+    background-color: rgb(85, 23, 243); 
     color: white; 
     font-size: 24px; 
     font-weight: bold; 
@@ -38,6 +48,7 @@ input[type="button"] {
     border: none; 
     border-radius: 5px; 
     border: 2px solid black; 
+    margin-bottom: 10px;
 }
 
 #process {
@@ -55,3 +66,15 @@ input[type="button"] {
     font-size: 36px;
     padding: 15px 10px 0 0 ;
 } 
+
+footer {
+    width:100%;
+    height: 3rem;
+    text-align: center;
+    position:absolute;
+    bottom: 0;
+    margin: auto;
+    color: white;
+    padding-top: 15px;
+    background-color: rgb(85, 23, 243);
+}
