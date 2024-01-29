@@ -11,16 +11,21 @@
     <header><h1>Calculator</h1></header>
     <table id="calcu"> 
         <tr> 
-            <td colspan="3"> 
+            <td colspan="4"> 
                 <input type="text" id="result"> 
             </td> 
-            <td><input type="button" class="button" value="c"></td> 
+            
         </tr> 
-  
+        <tr>
+            <td><input type="button" class="button" id="clear" value="c"></td> 
+            <td><input type="button" class="button" id="delete" value="d"></td> 
+            <td><input type="button" class="button" id="plus-minue" value="+/-"></td> 
+            <td><input type="button" class="button" id="percentage" value="%"></td> 
+        </tr>
         <tr> 
-            <td><input type="button" class="button number" value="1"></td> 
-            <td><input type="button" class="button number" value="2"></td> 
-            <td><input type="button" class="button number" value="3"></td> 
+            <td><input type="button" class="button number" value="7"></td> 
+            <td><input type="button" class="button number" value="8"></td> 
+            <td><input type="button" class="button number" value="9"></td> 
             <td><input type="button" class="button operator" value="/"></td> 
         </tr> 
         <tr> 
@@ -30,14 +35,14 @@
             <td><input type="button" class="button operator" value="*"></td> 
         </tr> 
         <tr> 
-            <td><input type="button" class="button number" value="7"></td> 
-            <td><input type="button" class="button number" value="8"></td> 
-            <td><input type="button" class="button number" value="9"></td> 
+            <td><input type="button" class="button number" value="1"></td> 
+            <td><input type="button" class="button number" value="2"></td> 
+            <td><input type="button" class="button number" value="3"></td> 
             <td><input type="button" class="button operator" value="-"></td> 
         </tr> 
         <tr> 
             <td><input type="button" class="button number" value="0"></td> 
-            <td><input type="button" class="button number" value="."></td> 
+            <td><input type="button" class="button" id="decimal" value="."></td> 
             <td><input type="button" class="button" id="equal" value="="></td> 
             <td><input type="button" class="button operator" value="+"></td> 
         </tr> 

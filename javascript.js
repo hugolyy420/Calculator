@@ -4,6 +4,9 @@ const operatorButtons = document.querySelectorAll('.operator');
 const operatorValues = Array.from(operatorButtons, ({ value }) => value);
 const equalButton = document.getElementById('equal')
 const displaybox = document.getElementById('result');
+const clearButton = document.getElementById('clear');
+const decimalButton = document.getElementById('decimal');
+const deleteButton = document.getElementById('delete');
 const cal = new Calculator;
 displaybox.defaultValue = 0;
 let firstNumber = "0";
@@ -16,11 +19,14 @@ numberButtons.forEach(button => {
 })
 
 function display(e) {
-    if (firstNumber == 0 && !operator) {
+    if (displaybox.value.includes(".") && firstNumber && !operator) {
+        firstNumber += e.target.value;
+        displaybox.value = firstNumber;
+    } else if (firstNumber == 0 && !operator) {
         firstNumber = e.target.value;
         displaybox.value = firstNumber;
-    } else
-    if (!operator) {
+    } 
+    else if (!operator) {
         firstNumber += e.target.value;
         displaybox.value = firstNumber;
     } else if (firstNumber && operator) {
@@ -41,7 +47,7 @@ function operate(e) {
     } 
     else if (secondNumber) {
         let resultmath = firstNumber + " " + operator + " " + secondNumber;
-        displaybox.value = cal.operate(resultmath);
+        displaybox.value = Math.round(cal.operate(resultmath)*1000)/1000;
         firstNumber = displaybox.value;
         operator = e.target.value;
         secondNumber = "";
@@ -53,12 +59,45 @@ equalButton.addEventListener('click',equal);
 function equal(e) {
      if (secondNumber &&  e.target.value === "=") {
         let resultmath = firstNumber + " " + operator + " " + secondNumber;
-        displaybox.value = cal.operate(resultmath);
+        displaybox.value = Math.round(cal.operate(resultmath)*1000)/1000;
         firstNumber = displaybox.value;
         operator = "";
         secondNumber = "";
     }
 }
+
+clearButton.addEventListener('click', clear);
+
+function clear() {
+    displaybox.value = 0;
+    firstNumber = "0";
+    operator = "";
+    secondNumber = "";
+}
+
+decimalButton.addEventListener('click', (e) => {
+    if (firstNumber && !firstNumber.includes(".") && !operator){
+        console.log("adding decimal point to firt number");
+        decimalButton.disabled = false;
+        firstNumber += e.target.value;
+        displaybox.value = firstNumber;
+    } else if (secondNumber && !secondNumber.includes(".")) {
+        console.log("Adding decimal point to second number");
+        decimalButton.disabled = false;
+        secondNumber += e.target.value;
+        displaybox.value = secondNumber;
+    }
+})
+
+deleteButton.addEventListener('click', deleteNumber)
+
+function deleteNumber () {
+    if (firstNumber) {
+      firstNumber.slice(0,-1);
+      displaybox.value = firstNumber;
+    }
+}
+
 function Calculator () {
 
     this.methods = {
