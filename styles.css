@@ -41,14 +41,15 @@ input[type="button"].operator, #equal {
 }
 
 input[type="button"] { 
-    width: 100%; 
-    padding: 20px 40px; 
+    width: 100px; 
+    padding: 20px; 
     background-color: rgb(255, 255, 255); 
     color: rgb(185, 81, 36); 
     font-size: 24px; 
     font-weight: bold; 
     border: 2px solid rgb(185, 81, 36); 
     border-radius: 15px; 
+    text-align: center;
 } 
   
 #big-display {
